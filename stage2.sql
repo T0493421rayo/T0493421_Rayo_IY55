@@ -54,6 +54,16 @@ CREATE TABLE loan_dvds(
 INSERT INTO borrowers(borrower_no, borrower_name, borrower_address, borrower_status)
 VALUES ('BN1721','Ben Jones','28 Loan Road,Nottingham NG3 3PB','ALLOWED');
 
+
+INSERT INTO borrowers(borrower_no, borrower_name, borrower_address, borrower_status)
+    VALUES
+       ('BN2001','Alex Morgan','12 Elm Street,NG1 4AB','ALLOWED'),
+       ('BN2002','James Turner','45 Willow Avenue,Nottingham NG2 5CD','ALLOWED'),
+       ('BN2003','Chloe Adams','78 Cedar Road ,Nottingham NG3 6EF','BANNED'),
+       ('BN2004','Robert Hughes','9 Maple Close,Nottingham NG4 7GH','ALLOWED'),
+       ('BN2005','Grace Bennette','33 Birch Lane, Nottingham NG5 8JK','ALLOWED');
+
+
 /*dvds*/
 INSERT INTO dvds (dvd_no, dvd_title, dvd_starring, dvd_year, rental_category, rental_cost)
 VALUES
@@ -118,10 +128,11 @@ VALUES
 
 
 
-
+USE dvd_tables;
 SELECT * FROM borrowers;
 USE dvd_tables;
 SELECT * FROM dvds;
 USE dvd_tables;
 SELECT * FROM loans;
 SELECT * FROM loan_dvds;
+
