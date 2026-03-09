@@ -62,17 +62,32 @@ VALUES ('BN1721','Ben Jones','28 Loan Road,Nottingham NG3 3PB','ALLOWED'),
     ('BN2007','Hannah Forest','56 Pine Groove, Nottingham, NG7 1NP','ALLOWED'),
     ('BN2008','Oliver Twist','88 Cherry Drive,Nottingham NG8 2QR','BANNED'),
     ('BN2009','Robin Hood','14 Ash Nottingham NG9 3ST','ALLOWED'),
-    ('BN2010','Daniel Murphy','67 Poplar Way,NG10 4UV','ALLOWED');
-
-INSERT INTO borrowers(borrower_no, borrower_name, borrower_address, borrower_status)
-VALUES
+    ('BN2010','Daniel Murphy','67 Poplar Way,NG10 4UV','ALLOWED'),
     ('BN2011','Sarah Collins','12 Maple Street, NG9 2LP','ALLOWED'),
     ('BN2012','Micheal Brown','45 Willow Crescent, NG8 1BD','BANNED'),
     ('BN2013','Emily Harris','78 Oak Avenue, NG7 6TR','ALLOWED'),
     ('BN2014','Laura Wilson','9 Cedar Close, NG11 8PW','ALLOWED'),
     ('BN2015','Matthew Baker','11 Rowan Street, NG12 5UR','ALLOWED'),
-    ('BN2016','Daniel Wright','29 Sycamore Court, NG2 7PL','ALLOWED');
-
+    ('BN2016','Daniel Wright','29 Sycamore Court, NG2 7PL','ALLOWED'),
+    ('BN2017','Thomas Walker','64 Harwthorn Rise, NG1 4QW','ALLOWED'),
+    ('BN2018','Chloe Foster','72 Beech Avenue, NG13 8LP','ALLOWED'),
+    ('BN2019','Luke Edwards','80 Fir Street,NG20 8JL','BANNED'),
+    ('BN2020','Nathan Cooper','52 Chestnut Road, NG19 1DF','ALLOWED'),
+    ('BN2021','Megan Ward','67 Spruce Way, NG3 4GQ','ALLOWED'),
+    ('BN2022','Ryan Mitchell','93 Poplar Drive,NG16 2SW','ALLOWED'),
+    ('BN2023','Grace Phillips','14 Juniper Way,Nottingham, NG17 4UP','BANNED'),
+    ('BN2024','Christopher Adams','38 Linden Road,Nottingham, NG14 6TT','BANNED'),
+    ('BN2025','Tommy Dean','3 Foxfield Way,Nottingham, NG3 7AC','ALLOWED'),
+    ('BN2090','Harry Potter','8 Columbus Drive,Nottingham, NG1 9AJ','ALLOWED'),
+    ('BN2081','Timmy Turner','5 Main Way Street,Nottingham, NG7 9UI','ALLOWED'),
+    ('BN2041','Megan Win','9 Pinnock Way,Nottingham, NG3 6YI','ALLOWED'),
+    ('BN2071','Mark Fin','7 Adlder Close,Nottingham NG13 5TR','ALLOWED'),
+    ('BN2031','Charles Darwin','1 Roman Close,Nottingham NG4 8JS','BANNED'),
+    ('BN2035','Adams Smith','7A Birch Road,Nottingham, NG10 3QA','ALLOWED'),
+    ('BN2027','Mary Wolfhard','9A Mile End,Nottingham, NG4 IAM','ALLOWED'),
+    ('BN2065','Tim Ridge','8 Pluto Way, Nottingham, NG12 T61','ALLOWED'),
+    ('BN2070','Thomas Eddison','10 Uranus Drive,Nottingham,NG2 T21','ALLOWED'),
+    ('BN2051','Tim Burton','7 Mayflower, Nottingham, NG10 J43','ALLOWED');
 
 
 
@@ -116,7 +131,6 @@ VALUES
     ('DN087','Deadpool','Ryan Reynolds',2016,'Superhero',4.50),
     ('DN0190','Resident Evil: The Final Chapter','Millia Jovovich',2016,'Action',4.50),
     ('DN0107','Captain America','Chris Evans',2016,'Superhero',4.50);
-
 
 
 
