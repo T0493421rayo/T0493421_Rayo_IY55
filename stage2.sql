@@ -52,16 +52,28 @@ CREATE TABLE loan_dvds(
 
 /*borrower*/
 INSERT INTO borrowers(borrower_no, borrower_name, borrower_address, borrower_status)
-VALUES ('BN1721','Ben Jones','28 Loan Road,Nottingham NG3 3PB','ALLOWED');
-
+VALUES ('BN1721','Ben Jones','28 Loan Road,Nottingham NG3 3PB','ALLOWED'),
+    ('BN2001','Alex Morgan','12 Elm Street,NG1 4AB','ALLOWED'),
+    ('BN2002','James Turner','45 Willow Avenue,Nottingham NG2 5CD','ALLOWED'),
+    ('BN2003','Chloe Adams','78 Cedar Road ,Nottingham NG3 6EF','BANNED'),
+    ('BN2004','Robert Hughes','9 Maple Close,Nottingham NG4 7GH','ALLOWED'),
+    ('BN2005','Grace Bennette','33 Birch Lane, Nottingham NG5 8JK','ALLOWED'),
+    ('BN2006','Samuel Wright','21 Oak Crescent,Nottingham,NG6 9LM','ALLOWED'),
+    ('BN2007','Hannah Forest','56 Pine Groove, Nottingham, NG7 1NP','ALLOWED'),
+    ('BN2008','Oliver Twist','88 Cherry Drive,Nottingham NG8 2QR','BANNED'),
+    ('BN2009','Robin Hood','14 Ash Nottingham NG9 3ST','ALLOWED'),
+    ('BN2010','Daniel Murphy','67 Poplar Way,NG10 4UV','ALLOWED');
 
 INSERT INTO borrowers(borrower_no, borrower_name, borrower_address, borrower_status)
-    VALUES
-       ('BN2001','Alex Morgan','12 Elm Street,NG1 4AB','ALLOWED'),
-       ('BN2002','James Turner','45 Willow Avenue,Nottingham NG2 5CD','ALLOWED'),
-       ('BN2003','Chloe Adams','78 Cedar Road ,Nottingham NG3 6EF','BANNED'),
-       ('BN2004','Robert Hughes','9 Maple Close,Nottingham NG4 7GH','ALLOWED'),
-       ('BN2005','Grace Bennette','33 Birch Lane, Nottingham NG5 8JK','ALLOWED');
+VALUES
+    ('BN2011','Sarah Collins','12 Maple Street, NG9 2LP','ALLOWED'),
+    ('BN2012','Micheal Brown','45 Willow Crescent, NG8 1BD','BANNED'),
+    ('BN2013','Emily Harris','78 Oak Avenue, NG7 6TR','ALLOWED'),
+    ('BN2014','Laura Wilson','9 Cedar Close, NG11 8PW','ALLOWED'),
+    ('BN2015','Matthew Baker','11 Rowan Street, NG12 5UR','ALLOWED'),
+    ('BN2016','Daniel Wright','29 Sycamore Court, NG2 7PL','ALLOWED');
+
+
 
 
 /*dvds*/
