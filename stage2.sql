@@ -1,4 +1,3 @@
-
 USE dvd_tables;
 SHOW DATABASES;
 
@@ -8,6 +7,7 @@ CREATE TABLE borrowers (
     borrower_address VARCHAR(255),
     borrower_status VARCHAR(20)
 );
+
 
 CREATE TABLE dvds(
     dvd_no VARCHAR(10) PRIMARY KEY,
@@ -29,9 +29,9 @@ CREATE TABLE loans(
     CONSTRAINT fK_loans_borrowers
                   FOREIGN KEY(borrower_no) REFERENCES  borrowers(borrower_no)
 
-
-
 );
+
+
 CREATE TABLE loan_dvds(
     loan_no VARCHAR(10)NOT NULL,
     dvd_no VARCHAR(10)NOT NULL,
@@ -133,16 +133,45 @@ VALUES
     ('DN0107','Captain America','Chris Evans',2016,'Superhero',4.50);
 
 
-
-
-
-
 /*loans*/
 INSERT INTO loans (loan_no, borrower_no, loan_date, total_loan_cost)
-VALUES ('LN74857', 'BN1721', STR_TO_DATE('06/02/2002','%d/%m/%Y'), 8.00);
+VALUES ('LN74857', 'BN1721', STR_TO_DATE('06/02/2002','%d/%m/%Y'), 8.00),
+       ('LN74850', 'BN1721', STR_TO_DATE('06/02/2002','%d/%m/%Y'), 8.00);
 
-INSERT INTO loans (loan_no, borrower_no, loan_date, total_loan_cost)
-VALUES ('LN74850', 'BN1721', STR_TO_DATE('06/02/2002','%d/%m/%Y'), 8.00);
+INSERT INTO loans(loan_no, borrower_no, loan_date, total_loan_cost)
+VALUES
+    ('LN80001', 'BN2001', STR_TO_DATE('10/03/2002','%d/%m/%Y'), 7.00),
+    ('LN80002', 'BN2002', STR_TO_DATE('11/03/2002','%d/%m/%Y'), 4.50),
+    ('LN80003', 'BN2004', STR_TO_DATE('12/03/2002','%d/%m/%Y'), 9.00),
+    ('LN80004', 'BN2005', STR_TO_DATE('13/03/2002','%d/%m/%Y'), 3.50),
+    ('LN80005', 'BN2006', STR_TO_DATE('14/03/2002','%d/%m/%Y'), 16.00),
+    ('LN80006', 'BN2007', STR_TO_DATE('15/03/2002','%d/%m/%Y'), 4.00),
+    ('LN80007', 'BN2008', STR_TO_DATE('16/03/2002','%d/%m/%Y'), 8.50),
+    ('LN80008', 'BN2009', STR_TO_DATE('17/03/2002','%d/%m/%Y'), 6.00),
+    ('LN80009', 'BN2010', STR_TO_DATE('18/03/2002','%d/%m/%Y'), 5.00),
+    ('LN80010', 'BN2011', STR_TO_DATE('19/03/2002','%d/%m/%Y'), 7.50),
+    ('LN80011', 'BN2013', STR_TO_DATE('20/03/2002','%d/%m/%Y'),7.00),
+    ('LN80012', 'BN2015', STR_TO_DATE('21/03/2002','%d/%m/%Y'), 8.00),
+    ('LN80013', 'BN2016', STR_TO_DATE('22/03/2002','%d/%m/%Y'), 4.50),
+    ('LN80014', 'BN2017', STR_TO_DATE('23/03/2002','%d/%m/%Y'), 8.00),
+    ('LN80015', 'BN2018', STR_TO_DATE('24/03/2002','%d/%m/%Y'),4.00),
+    ('LN80016', 'BN2020', STR_TO_DATE('25/03/2002','%d/%m/%Y'), 8.00),
+    ('LN80017', 'BN2021', STR_TO_DATE('26/03/2002','%d/%m/%Y'), 5.00),
+    ('LN80018', 'BN2022', STR_TO_DATE('27/03/2002','%d/%m/%Y'), 8.00),
+    ('LN80019', 'BN2025', STR_TO_DATE('28/03/2002','%d/%m/%Y'), 9.00),
+    ('LN80020', 'BN2027', STR_TO_DATE('29/04/2002','%d/%m/%Y'), 7.10),
+    ('LN80021', 'BN2031', STR_TO_DATE('30/04/2002','%d/%m/%Y'), 6.80),
+    ('LN80052', 'BN2035', STR_TO_DATE('1/05/2002','%d/%m/%Y'), 8.90),
+    ('LN80053', 'BN2041', STR_TO_DATE('2/05/2002','%d/%m/%Y'), 10.00),
+    ('LN80054', 'BN80051', STR_TO_DATE('3/05/2002','%d/%m/%Y'), 7.00);
+
+
+
+
+
+
+
+
 
 /*loan dvds*/
 INSERT INTO loan_dvds
@@ -161,4 +190,6 @@ SELECT * FROM dvds;
 USE dvd_tables;
 SELECT * FROM loans;
 SELECT * FROM loan_dvds;
+
+
 
