@@ -8,7 +8,6 @@ CREATE TABLE borrowers (
     borrower_status VARCHAR(20)
 );
 
-
 CREATE TABLE dvds(
     dvd_no VARCHAR(10) PRIMARY KEY,
     dvd_title VARCHAR(100)NOT NULL,
@@ -37,7 +36,7 @@ CREATE TABLE loan_dvds(
     dvd_no VARCHAR(10)NOT NULL,
     copy_no VARCHAR(10)NOT NULL,
     dvd_status VARCHAR(20)NOT NULL,
-    actual_return_date DATE NULL,
+    actual_return_date DATE NOT NULL,
     return_due_date DATE NOT NULL,
     shelf_position VARCHAR(20) NOT NULL,
 
@@ -49,6 +48,7 @@ CREATE TABLE loan_dvds(
                       FOREIGN KEY (dvd_no)REFERENCES dvds(dvd_no)
 
 );
+
 
 /*borrower*/
 INSERT INTO borrowers(borrower_no, borrower_name, borrower_address, borrower_status)
@@ -133,13 +133,12 @@ VALUES
     ('DN0107','Captain America','Chris Evans',2016,'Superhero',4.50);
 
 
+
 /*loans*/
 INSERT INTO loans (loan_no, borrower_no, loan_date, total_loan_cost)
-VALUES ('LN74857', 'BN1721', STR_TO_DATE('06/02/2002','%d/%m/%Y'), 8.00),
-       ('LN74850', 'BN1721', STR_TO_DATE('06/02/2002','%d/%m/%Y'), 8.00);
-
-INSERT INTO loans(loan_no, borrower_no, loan_date, total_loan_cost)
 VALUES
+    ('LN74857', 'BN1721', STR_TO_DATE('06/02/2002','%d/%m/%Y'), 8.00),
+    ('LN74850', 'BN1721', STR_TO_DATE('06/02/2002','%d/%m/%Y'), 8.00),
     ('LN80001', 'BN2001', STR_TO_DATE('10/03/2002','%d/%m/%Y'), 7.00),
     ('LN80002', 'BN2002', STR_TO_DATE('11/03/2002','%d/%m/%Y'), 4.50),
     ('LN80003', 'BN2004', STR_TO_DATE('12/03/2002','%d/%m/%Y'), 9.00),
@@ -161,9 +160,27 @@ VALUES
     ('LN80019', 'BN2025', STR_TO_DATE('28/03/2002','%d/%m/%Y'), 9.00),
     ('LN80020', 'BN2027', STR_TO_DATE('29/04/2002','%d/%m/%Y'), 7.10),
     ('LN80021', 'BN2031', STR_TO_DATE('30/04/2002','%d/%m/%Y'), 6.80),
-    ('LN80052', 'BN2035', STR_TO_DATE('1/05/2002','%d/%m/%Y'), 8.90),
-    ('LN80053', 'BN2041', STR_TO_DATE('2/05/2002','%d/%m/%Y'), 10.00),
-    ('LN80054', 'BN80051', STR_TO_DATE('3/05/2002','%d/%m/%Y'), 7.00);
+    ('LN80052', 'BN2035', STR_TO_DATE('01/05/2002','%d/%m/%Y'), 8.90),
+    ('LN80053', 'BN2041', STR_TO_DATE('02/05/2002','%d/%m/%Y'), 10.00),
+    ('LN80054', 'BN2035', STR_TO_DATE('03/05/2002','%d/%m/%Y'), 7.00),
+    ('LN80055', 'BN2051', STR_TO_DATE('04/05/2002','%d/%m/%Y'), 8.60),
+    ('LN80056', 'BN2065', STR_TO_DATE('06/05/2002','%d/%m/%Y'), 4.40),
+    ('LN80057', 'BN2070', STR_TO_DATE('07/05/2002','%d/%m/%Y'), 6.30),
+    ('LN90003','BN2012',STR_TO_DATE('12/05/2002','%d/%m/%Y'), 8.20)
+    ('LN80058', 'BN2071', STR_TO_DATE('08/05/2002','%d/%m/%Y'), 7.60),
+    ('LN80059', 'BN2081', STR_TO_DATE('09/05/2002','%d/%m/%Y'), 4.70),
+    ('LN80060', 'BN2090', STR_TO_DATE('10/05/2002','%d/%m/%Y'), 5.90);
+
+INSERT INTO loans(loan_no, borrower_no, loan_date, total_loan_cost)
+VALUES
+    ('LN80061', 'BN2090', STR_TO_DATE('12/05/2002','%d/%m/%Y'), 5.90),
+    ('LN80062', 'BN2035', STR_TO_DATE('10/05/2002','%d/%m/%Y'), 6.90),
+    ('LN80063', 'BN2018', STR_TO_DATE('12/05/2002','%d/%m/%Y'), 8.00);
+
+
+
+
+
 
 
 
@@ -179,6 +196,49 @@ INSERT INTO loan_dvds
 VALUES
     ('LN74857','DN198','CN1099','on_loan',NULL,
     STR_TO_DATE('13/02/2002','%d/%m/%Y'), 'AV123');
+
+INSERT INTO loan_dvds (loan_no, dvd_no, copy_no, dvd_status, actual_return_date, return_due_date, shelf_position)
+VALUES
+    ('LN74850','DN9829','CN2101','returned',STR_TO_DATE('10/02/2002','%d/%m/%Y'),STR_TO_DATE('09/02/2002','%d/%m/%Y'),'BX201'),
+    ('LN80001','DN050','CN3001','returned', STR_TO_DATE('15/03/2002','%d/%m/%Y'), STR_TO_DATE('14/03/2002','%d/%m/%Y'),'SH110'),
+    ('LN80002','DN0135','CN3002','returned', STR_TO_DATE('10/02/2002','%d/%m/%Y'),STR_TO_DATE('09/02/2002','%d/%m/%Y'),'SH111'),
+    ('LN80003','DN0171','CN3003','returned',STR_TO_DATE('20/03/2002','%d/%m/%Y'), STR_TO_DATE('19/03/2002','%d/%m/%Y'),'SH112'),
+    ('LN80004','DN102','CN3004','returned',STR_TO_DATE('17/03/2002','%d/%m/%Y'),STR_TO_DATE('16/03/2002','%d/%m/%Y'),'AV201'),
+    ('LN80005','DN0188','CN3005','returned',STR_TO_DATE('22/03/2002','%d/%m/%Y'),STR_TO_DATE('21/03/2002','%d/%m/%Y'),'AV202'),
+    ('LN80006','DN025','CN3006','returned',STR_TO_DATE('22/03/2002','%d/%m/%Y'),STR_TO_DATE('20/03/2002','%d/%m/%Y'),'BX330'),
+    ('LN80007','DN0157','CN3007','returned',STR_TO_DATE('25/03/2002','%d/%m/%Y'),STR_TO_DATE('23/03/2002','%d/%m/%Y'),'BX331'),
+    ('LN80008','DN0177','CN3008','returned',STR_TO_DATE('27/03/2002','%d/%m/%Y'),STR_TO_DATE('26/03/2002','%d/%m/%Y'),'BX332'),
+    ('LN80009','DN029','CN3009','returned',STR_TO_DATE('28/03/2002','%d/%m/%Y'),STR_TO_DATE('27/03/2002','%d/%m/%Y'),'SH210'),
+    ('LN80010','DN0114','CN3010','returned',STR_TO_DATE('29/03/2002','%d/%m/%Y'),STR_TO_DATE('28/03/2002','%d/%m/%Y'),'SH211'),
+    ('LN80021','DN0107','CN8080','overdue',STR_TO_DATE('28/05/2002','%d/%m/%Y'),STR_TO_DATE('15/05/2002','%d/%m/%Y'),'BD007'),
+    ('LN80021','DN0177','CN6120','overdue',STR_TO_DATE('04/05/2002','%d/%m/%Y'),STR_TO_DATE('03/04/2002','%d/%m/%Y'),'BX106'),
+    ('LN90003','DN102','CN6006','overdue',STR_TO_DATE('20/05/2002','%d/%m/%Y'),STR_TO_DATE('14/05/2002','%d/%m/%Y'),'BD006'),
+    ('LN80012','DN083','CN3012','returned',STR_TO_DATE('02/04/2002','%d/%m/%Y'),STR_TO_DATE('01/04/2002','%d/%m/%Y'),'AV302'),
+    ('LN80016','DN100','CN3016','returned',STR_TO_DATE('07/04/2002','%d/%m/%Y'),STR_TO_DATE('06/04/2002','%d/%m/%Y'),'SH402'),
+    ('LN80011','DN085','CN7001','returned', STR_TO_DATE('22/03/2002','%d/%m/%Y'),STR_TO_DATE('21/03/2002','%d/%m/%Y'),'SH501'),
+    ('LN80013','DN039','CN7002','returned', STR_TO_DATE('24/03/2002','%d/%m/%Y'),STR_TO_DATE('23/03/2002','%d/%m/%Y'),'SH502'),
+    ('LN80014','DN0117','CN7003','returned',STR_TO_DATE('25/03/2002','%d/%m/%Y'),STR_TO_DATE('24/03/2002','%d/%m/%Y'),'SH503'),
+    ('LN80015','DN0183','CN7004','returned', STR_TO_DATE('26/03/2002','%d/%m/%Y'),STR_TO_DATE('25/03/2002','%d/%m/%Y'),'SH504'),
+    ('LN80017','DN070','CN7005','overdue',STR_TO_DATE('30/03/2002','%d/%m/%Y'), STR_TO_DATE('27/03/2002','%d/%m/%Y'),'OV201'),
+    ('LN80018','DN048','CN7006','returned',STR_TO_DATE('29/03/2002','%d/%m/%Y'),STR_TO_DATE('28/03/2002','%d/%m/%Y'),'SH505'),
+    ('LN80019','DN0146','CN7007','overdue', STR_TO_DATE('31/03/2002','%d/%m/%Y'),STR_TO_DATE('28/03/2002','%d/%m/%Y'),'OV202'),
+    ('LN80020','DN062','CN7008','returned',STR_TO_DATE('01/05/2002','%d/%m/%Y'),STR_TO_DATE('30/04/2002','%d/%m/%Y'),'SH506'),
+    ('LN80052','DN0139','CN7009','returned',STR_TO_DATE('03/05/2002','%d/%m/%Y'),STR_TO_DATE('02/05/2002','%d/%m/%Y'),'SH507'),
+    ('LN80053','DN0151','CN7010','overdue',STR_TO_DATE('05/05/2002','%d/%m/%Y'), STR_TO_DATE('03/05/2002','%d/%m/%Y'),'OV203'),
+    ('LN80054','DN056','CN7011','returned', STR_TO_DATE('04/05/2002','%d/%m/%Y'), STR_TO_DATE('03/05/2002','%d/%m/%Y'),'SH508'),
+    ('LN80055','DN0166','CN7012','returned',STR_TO_DATE('06/05/2002','%d/%m/%Y'),STR_TO_DATE('05/05/2002','%d/%m/%Y'),'SH509'),
+    ('LN80056','DN033','CN7013','overdue', STR_TO_DATE('08/05/2002','%d/%m/%Y'),STR_TO_DATE('06/05/2002','%d/%m/%Y'),'OV204'),
+    ('LN80057','DN0108','CN7014','returned', STR_TO_DATE('08/05/2002','%d/%m/%Y'), STR_TO_DATE('07/05/2002','%d/%m/%Y'),'SH510'),
+    ('LN80058','DN052','CN7015','returned',STR_TO_DATE('09/05/2002','%d/%m/%Y'),STR_TO_DATE('08/05/2002','%d/%m/%Y'),'SH511'),
+    ('LN80059','DN0161','CN7016','overdue',STR_TO_DATE('11/05/2002','%d/%m/%Y'), STR_TO_DATE('09/05/2002','%d/%m/%Y'),'OV205'),
+    ('LN80060','DN013','CN7017','returned', STR_TO_DATE('11/05/2002','%d/%m/%Y'),STR_TO_DATE('10/05/2002','%d/%m/%Y'),'SH512'),
+    ('LN80061','DN0149','CN7018','returned', STR_TO_DATE('13/05/2002','%d/%m/%Y'),STR_TO_DATE('12/05/2002','%d/%m/%Y'),'SH513'),
+    ('LN80062','DN087','CN7019','overdue', STR_TO_DATE('14/05/2002','%d/%m/%Y'),STR_TO_DATE('12/05/2002','%d/%m/%Y'),'OV206'),
+    ('LN80063','DN0190','CN7020','returned',STR_TO_DATE('14/05/2002','%d/%m/%Y'),STR_TO_DATE('12/05/2002','%d/%m/%Y'),'SH514');
+
+
+
+
 
 
 
