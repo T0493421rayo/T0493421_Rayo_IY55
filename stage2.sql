@@ -5,7 +5,9 @@ CREATE TABLE borrowers (
     borrower_no VARCHAR(10) PRIMARY KEY,
     borrower_name VARCHAR(100) NOT NULL,
     borrower_address VARCHAR(255),
-    borrower_status VARCHAR(20)
+    borrower_status VARCHAR(20),
+    total_fine_cost DECIMAL(5,2)
+
 );
 
 CREATE TABLE dvds(
@@ -14,7 +16,11 @@ CREATE TABLE dvds(
     dvd_starring VARCHAR(100)NOT NULL,
     dvd_year INT NOT NULL,
     rental_category VARCHAR(50)NOT NULL,
-    rental_cost DECIMAL(5,2)NOT NULL
+    rental_cost DECIMAL(5,2)NOT NULL,
+    rental_duration VARCHAR(20),
+    fine_charged_per_day DECIMAL(5,2)
+
+
 
 );
 
@@ -23,7 +29,6 @@ CREATE TABLE loans(
     loan_no VARCHAR(10)PRIMARY KEY,
     borrower_no VARCHAR(10)NOT NULL,
     loan_date DATE NOT NULL,
-    total_loan_cost DECIMAL(6,2) NOT NULL,
 
     CONSTRAINT fK_loans_borrowers
                   FOREIGN KEY(borrower_no) REFERENCES  borrowers(borrower_no)
@@ -39,6 +44,9 @@ CREATE TABLE loan_dvds(
     actual_return_date DATE NOT NULL,
     return_due_date DATE NOT NULL,
     shelf_position VARCHAR(20) NOT NULL,
+    fine_amount DECIMAL(5,2),
+
+
 
     PRIMARY KEY (loan_no,dvd_no,copy_no),
 
@@ -51,8 +59,8 @@ CREATE TABLE loan_dvds(
 
 
 /*borrower*/
-INSERT INTO borrowers(borrower_no, borrower_name, borrower_address, borrower_status)
-VALUES ('BN1721','Ben Jones','28 Loan Road,Nottingham NG3 3PB','ALLOWED'),
+INSERT INTO borrowers(borrower_no, borrower_name, borrower_address, borrower_status,total_fine_cost)
+VALUES ('BN1721','Ben Jones','28 Loan Road,Nottingham NG3 3PB','ALLOWED','0.00'),
     ('BN2001','Alex Morgan','12 Elm Street,NG1 4AB','ALLOWED'),
     ('BN2002','James Turner','45 Willow Avenue,Nottingham NG2 5CD','ALLOWED'),
     ('BN2003','Chloe Adams','78 Cedar Road ,Nottingham NG3 6EF','BANNED'),
@@ -135,58 +143,44 @@ VALUES
 
 
 /*loans*/
-INSERT INTO loans (loan_no, borrower_no, loan_date, total_loan_cost)
+INSERT INTO loans (loan_no, borrower_no, loan_date)
 VALUES
-    ('LN74857', 'BN1721', STR_TO_DATE('06/02/2002','%d/%m/%Y'), 8.00),
-    ('LN74850', 'BN1721', STR_TO_DATE('06/02/2002','%d/%m/%Y'), 8.00),
-    ('LN80001', 'BN2001', STR_TO_DATE('10/03/2002','%d/%m/%Y'), 7.00),
-    ('LN80002', 'BN2002', STR_TO_DATE('11/03/2002','%d/%m/%Y'), 4.50),
-    ('LN80003', 'BN2004', STR_TO_DATE('12/03/2002','%d/%m/%Y'), 9.00),
-    ('LN80004', 'BN2005', STR_TO_DATE('13/03/2002','%d/%m/%Y'), 3.50),
-    ('LN80005', 'BN2006', STR_TO_DATE('14/03/2002','%d/%m/%Y'), 16.00),
-    ('LN80006', 'BN2007', STR_TO_DATE('15/03/2002','%d/%m/%Y'), 4.00),
-    ('LN80007', 'BN2008', STR_TO_DATE('16/03/2002','%d/%m/%Y'), 8.50),
-    ('LN80008', 'BN2009', STR_TO_DATE('17/03/2002','%d/%m/%Y'), 6.00),
-    ('LN80009', 'BN2010', STR_TO_DATE('18/03/2002','%d/%m/%Y'), 5.00),
-    ('LN80010', 'BN2011', STR_TO_DATE('19/03/2002','%d/%m/%Y'), 7.50),
-    ('LN80011', 'BN2013', STR_TO_DATE('20/03/2002','%d/%m/%Y'),7.00),
-    ('LN80012', 'BN2015', STR_TO_DATE('21/03/2002','%d/%m/%Y'), 8.00),
-    ('LN80013', 'BN2016', STR_TO_DATE('22/03/2002','%d/%m/%Y'), 4.50),
-    ('LN80014', 'BN2017', STR_TO_DATE('23/03/2002','%d/%m/%Y'), 8.00),
-    ('LN80015', 'BN2018', STR_TO_DATE('24/03/2002','%d/%m/%Y'),4.00),
-    ('LN80016', 'BN2020', STR_TO_DATE('25/03/2002','%d/%m/%Y'), 8.00),
-    ('LN80017', 'BN2021', STR_TO_DATE('26/03/2002','%d/%m/%Y'), 5.00),
-    ('LN80018', 'BN2022', STR_TO_DATE('27/03/2002','%d/%m/%Y'), 8.00),
-    ('LN80019', 'BN2025', STR_TO_DATE('28/03/2002','%d/%m/%Y'), 9.00),
-    ('LN80020', 'BN2027', STR_TO_DATE('29/04/2002','%d/%m/%Y'), 7.10),
-    ('LN80021', 'BN2031', STR_TO_DATE('30/04/2002','%d/%m/%Y'), 6.80),
-    ('LN80052', 'BN2035', STR_TO_DATE('01/05/2002','%d/%m/%Y'), 8.90),
-    ('LN80053', 'BN2041', STR_TO_DATE('02/05/2002','%d/%m/%Y'), 10.00),
-    ('LN80054', 'BN2035', STR_TO_DATE('03/05/2002','%d/%m/%Y'), 7.00),
-    ('LN80055', 'BN2051', STR_TO_DATE('04/05/2002','%d/%m/%Y'), 8.60),
-    ('LN80056', 'BN2065', STR_TO_DATE('06/05/2002','%d/%m/%Y'), 4.40),
-    ('LN80057', 'BN2070', STR_TO_DATE('07/05/2002','%d/%m/%Y'), 6.30),
-    ('LN90003','BN2012',STR_TO_DATE('12/05/2002','%d/%m/%Y'), 8.20)
-    ('LN80058', 'BN2071', STR_TO_DATE('08/05/2002','%d/%m/%Y'), 7.60),
-    ('LN80059', 'BN2081', STR_TO_DATE('09/05/2002','%d/%m/%Y'), 4.70),
-    ('LN80060', 'BN2090', STR_TO_DATE('10/05/2002','%d/%m/%Y'), 5.90);
-
-INSERT INTO loans(loan_no, borrower_no, loan_date, total_loan_cost)
-VALUES
-    ('LN80061', 'BN2090', STR_TO_DATE('12/05/2002','%d/%m/%Y'), 5.90),
-    ('LN80062', 'BN2035', STR_TO_DATE('10/05/2002','%d/%m/%Y'), 6.90),
-    ('LN80063', 'BN2018', STR_TO_DATE('12/05/2002','%d/%m/%Y'), 8.00);
-
-
-
-
-
-
-
-
-
-
-
+    ('LN74857', 'BN1721', STR_TO_DATE('06/02/2002','%d/%m/%Y')),
+    ('LN74850', 'BN1721', STR_TO_DATE('06/02/2002','%d/%m/%Y')),
+    ('LN80001', 'BN2001', STR_TO_DATE('10/03/2002','%d/%m/%Y')),
+    ('LN80002', 'BN2002', STR_TO_DATE('11/03/2002','%d/%m/%Y')),
+    ('LN80003', 'BN2004', STR_TO_DATE('12/03/2002','%d/%m/%Y')),
+    ('LN80004', 'BN2005', STR_TO_DATE('13/03/2002','%d/%m/%Y')),
+    ('LN80005', 'BN2006', STR_TO_DATE('14/03/2002','%d/%m/%Y')),
+    ('LN80006', 'BN2007', STR_TO_DATE('15/03/2002','%d/%m/%Y')),
+    ('LN80007', 'BN2008', STR_TO_DATE('16/03/2002','%d/%m/%Y')),
+    ('LN80008', 'BN2009', STR_TO_DATE('17/03/2002','%d/%m/%Y')),
+    ('LN80009', 'BN2010', STR_TO_DATE('18/03/2002','%d/%m/%Y')),
+    ('LN80010', 'BN2011', STR_TO_DATE('19/03/2002','%d/%m/%Y')),
+    ('LN80011', 'BN2013', STR_TO_DATE('20/03/2002','%d/%m/%Y')),
+    ('LN80012', 'BN2015', STR_TO_DATE('21/03/2002','%d/%m/%Y')),
+    ('LN80013', 'BN2016', STR_TO_DATE('22/03/2002','%d/%m/%Y')),
+    ('LN80014', 'BN2017', STR_TO_DATE('23/03/2002','%d/%m/%Y')),
+    ('LN80015', 'BN2018', STR_TO_DATE('24/03/2002','%d/%m/%Y')),
+    ('LN80016', 'BN2020', STR_TO_DATE('25/03/2002','%d/%m/%Y')),
+    ('LN80017', 'BN2021', STR_TO_DATE('26/03/2002','%d/%m/%Y')),
+    ('LN80018', 'BN2022', STR_TO_DATE('27/03/2002','%d/%m/%Y')),
+    ('LN80019', 'BN2025', STR_TO_DATE('28/03/2002','%d/%m/%Y')),
+    ('LN80020', 'BN2027', STR_TO_DATE('29/04/2002','%d/%m/%Y')),
+    ('LN80021', 'BN2031', STR_TO_DATE('30/04/2002','%d/%m/%Y')),
+    ('LN80052', 'BN2035', STR_TO_DATE('01/05/2002','%d/%m/%Y')),
+    ('LN80053', 'BN2041', STR_TO_DATE('02/05/2002','%d/%m/%Y')),
+    ('LN80054', 'BN2035', STR_TO_DATE('03/05/2002','%d/%m/%Y')),
+    ('LN80055', 'BN2051', STR_TO_DATE('04/05/2002','%d/%m/%Y')),
+    ('LN80056', 'BN2065', STR_TO_DATE('06/05/2002','%d/%m/%Y')),
+    ('LN80057', 'BN2070', STR_TO_DATE('07/05/2002','%d/%m/%Y')),
+    ('LN80058', 'BN2071', STR_TO_DATE('08/05/2002','%d/%m/%Y')),
+    ('LN80059', 'BN2081', STR_TO_DATE('09/05/2002','%d/%m/%Y')),
+    ('LN80060', 'BN2090', STR_TO_DATE('10/05/2002','%d/%m/%Y')),
+    ('LN80061', 'BN2090', STR_TO_DATE('12/05/2002','%d/%m/%Y')),
+    ('LN80062', 'BN2035', STR_TO_DATE('10/05/2002','%d/%m/%Y')),
+    ('LN80063', 'BN2018', STR_TO_DATE('12/05/2002','%d/%m/%Y')),
+    ('LN90003', 'BN2012', STR_TO_DATE('12/05/2002','%d/%m/%Y'));
 
 
 
@@ -237,19 +231,18 @@ VALUES
     ('LN80063','DN0190','CN7020','returned',STR_TO_DATE('14/05/2002','%d/%m/%Y'),STR_TO_DATE('12/05/2002','%d/%m/%Y'),'SH514');
 
 
-
-
-
-
-
-
 USE dvd_tables;
 SELECT * FROM borrowers;
+
 USE dvd_tables;
 SELECT * FROM dvds;
+
 USE dvd_tables;
 SELECT * FROM loans;
+
+USE dvd_tables;
 SELECT * FROM loan_dvds;
+
 
 
 
