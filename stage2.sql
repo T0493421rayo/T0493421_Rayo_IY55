@@ -42,10 +42,6 @@ CREATE TABLE loan_dvds(
     actual_return_date DATE NOT NULL,
     return_due_date DATE NOT NULL,
     shelf_position VARCHAR(20) NOT NULL,
-    fine_amount DECIMAL(5,2),
-
-
-
     PRIMARY KEY (loan_no,dvd_no,copy_no),
 
     CONSTRAINT fk_loans_dvds_loans
@@ -242,4 +238,16 @@ USE dvd_tables;
 SELECT * FROM loan_dvds;
 
 
+UPDATE loans
+SET total_loan_cost = 0.00
+WHERE total_loan_cost IS NULL;
 
+UPDATE loans l
+JOIN (
+    SELECT ld.loan_no, SUM(d.rental_cost) AS total_cost
+    FROM loan_dvds ld
+    JOIN dvds d ON ld.dvd_no = d.dvd_no
+    GROUP BY ld.loan_no
+) AS x ON l.loan_no = x.loan_no
+SET l.total_loan_cost = x.total_cost
+WHERE l.loan_no = x.loan_no;
