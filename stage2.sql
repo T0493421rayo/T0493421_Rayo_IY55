@@ -243,11 +243,15 @@ SET total_loan_cost = 0.00
 WHERE total_loan_cost IS NULL;
 
 UPDATE loans l
-JOIN (
-    SELECT ld.loan_no, SUM(d.rental_cost) AS total_cost
-    FROM loan_dvds ld
-    JOIN dvds d ON ld.dvd_no = d.dvd_no
-    GROUP BY ld.loan_no
-) AS x ON l.loan_no = x.loan_no
-SET l.total_loan_cost = x.total_cost
-WHERE l.loan_no = x.loan_no;
+JOIN loan_dvds ld ON l.loan_no = ld.loan_no
+JOIN dvds d ON ld.dvd_no = d.dvd_no
+SET l.total_loan_cost = (
+    SELECT SUM(d2.rental_cost)
+    FROM loan_dvds ld2
+    JOIN dvds d2 ON ld2.dvd_no = d2.dvd_no
+    WHERE ld2.loan_no = l.loan_no
+)
+WHERE l.loan_no IN (
+    SELECT loan_no FROM loan_dvds
+);
+
