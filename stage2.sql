@@ -320,7 +320,22 @@ WHERE d.rental_category = 'Comedy'
 ORDER BY b.borrower_name;
 
 
+/*Overdue finds,total fines and details */
+SELECT
+    borrower_no,
+    borrower_name,
+    borrower_address,
+    borrower_status,
+    total_fine_cost
+FROM borrowers
+ORDER BY total_fine_cost DESC
+LIMIT 1;
 
+/* command for cost rental update*/
+UPDATE dvds
+SET rental_cost = 5.50
+WHERE rental_category = 'Superhero'
+  AND dvd_year >= 2015;
 
 
 
