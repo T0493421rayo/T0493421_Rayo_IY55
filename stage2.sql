@@ -331,7 +331,7 @@ FROM borrowers
 ORDER BY total_fine_cost DESC
 LIMIT 1;
 
-/* command for cost rental update*/
+/* command for cost rental updates*/
 UPDATE dvds
 SET rental_cost = 5.50
 WHERE rental_category = 'Superhero'
