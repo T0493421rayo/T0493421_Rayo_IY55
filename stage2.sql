@@ -55,7 +55,7 @@ CREATE TABLE loan_dvds(
 /*borrower*/
 INSERT INTO borrowers(borrower_no, borrower_name, borrower_address, borrower_status,total_fine_cost)
 VALUES ('BN1721','Ben Jones','28 Loan Road,Nottingham NG3 3PB','ALLOWED',0.00),
-    ('BN2001','Alex Morgan','12 Elm Street,NG1 4AB','ALLOWED',0,00),
+    ('BN2001','Alex Morgan','12 Elm Street,NG1 4AB','ALLOWED',0.00),
     ('BN2002','James Turner','45 Willow Avenue,Nottingham NG2 5CD','ALLOWED',0.00),
     ('BN2003','Chloe Adams','78 Cedar Road ,Nottingham NG3 6EF','BANNED',10.00),
     ('BN2004','Robert Hughes','9 Maple Close,Nottingham NG4 7GH','ALLOWED',0.00),
@@ -237,7 +237,6 @@ SELECT * FROM loans;
 USE dvd_tables;
 SELECT * FROM loan_dvds;
 
-
 UPDATE loans
 SET total_loan_cost = 0.00
 WHERE total_loan_cost IS NULL;
@@ -254,4 +253,18 @@ SET l.total_loan_cost = (
 WHERE l.loan_no IN (
     SELECT loan_no FROM loan_dvds
 );
+
+SELECT DISTINCT
+    b.borrower_no,
+    b.borrower_name
+FROM borrowers b
+JOIN loans l
+    ON b.borrower_no = l.borrower_no
+JOIN loan_dvds ld
+    ON l.loan_no = ld.loan_no
+WHERE ld.dvd_status <> 'returned'
+ORDER BY SUBSTRING_INDEX(b.borrower_name, ' ', -1);
+
+
+
 
