@@ -176,6 +176,15 @@ VALUES
     ('LN80063', 'BN2018', STR_TO_DATE('12/05/2002','%d/%m/%Y')),
     ('LN90003', 'BN2012', STR_TO_DATE('12/05/2002','%d/%m/%Y'));
 
+INSERT INTO loans (loan_no, borrower_no, loan_date)
+VALUES
+    ('LN30001', 'BN2007', STR_TO_DATE('10/03/2026','%d/%m/%Y')),
+    ('LN30002', 'BN2081', STR_TO_DATE('12/03/2026','%d/%m/%Y')),
+    ('LN30003', 'BN2018', STR_TO_DATE('15/03/2026','%d/%m/%Y')),
+    ('LN30004', 'BN2035', STR_TO_DATE('20/03/2026','%d/%m/%Y'));
+
+
+
 
 
 /*loan dvds*/
@@ -224,6 +233,16 @@ VALUES
     ('LN80062','DN087','CN7019','overdue', STR_TO_DATE('14/05/2002','%d/%m/%Y'),STR_TO_DATE('12/05/2002','%d/%m/%Y'),'OV206'),
     ('LN80063','DN0190','CN7020','returned',STR_TO_DATE('14/05/2002','%d/%m/%Y'),STR_TO_DATE('12/05/2002','%d/%m/%Y'),'SH514');
 
+INSERT INTO loan_dvds
+(loan_no, dvd_no, copy_no, dvd_status, actual_return_date, return_due_date, shelf_position)
+VALUES
+    ('LN30001', 'DN0157', 'CN9001', 'returned',STR_TO_DATE('14/03/2026','%d/%m/%Y'),STR_TO_DATE('17/03/2026','%d/%m/%Y'),'SH900'),
+    ('LN30002', 'DN033', 'CN9002', 'returned',STR_TO_DATE('18/03/2026','%d/%m/%Y'),STR_TO_DATE('19/03/2026','%d/%m/%Y'),'SH901'),
+    ('LN30003', 'DN0161', 'CN9003', 'returned', STR_TO_DATE('20/03/2026','%d/%m/%Y'), STR_TO_DATE('22/03/2026','%d/%m/%Y'),'SH902'),
+    ('LN30004', 'DN0159', 'CN9004', 'returned', STR_TO_DATE('25/03/2026','%d/%m/%Y'),STR_TO_DATE('27/03/2026','%d/%m/%Y'),'SH903');
+
+
+
 
 USE dvd_tables;
 SELECT * FROM borrowers;
@@ -254,6 +273,9 @@ WHERE l.loan_no IN (
     SELECT loan_no FROM loan_dvds
 );
 
+
+
+/* Command to show all borrowers who have current rentals and order them by surname.*/
 SELECT DISTINCT
     b.borrower_no,
     b.borrower_name
@@ -264,6 +286,49 @@ JOIN loan_dvds ld
     ON l.loan_no = ld.loan_no
 WHERE ld.dvd_status <> 'returned'
 ORDER BY SUBSTRING_INDEX(b.borrower_name, ' ', -1);
+
+
+/* Command to show lowest to highest ranked borrower's list with overdue loans */
+SELECT
+    loans.borrower_no,
+    COUNT(loan_dvds.loan_no) AS overdue_counter
+FROM loans
+JOIN loan_dvds
+ON loans.loan_no=loan_dvds.loan_no
+WHERE loan_dvds.dvd_status='overdue'
+GROUP BY loans.borrower_no
+ORDER BY overdue_counter DESC;
+
+
+/* Borrowers who rented comedy DVDs in the last 4 weeks  */
+SELECT
+    b.borrower_no,
+    b.borrower_name,
+    b.borrower_address,
+    d.dvd_title,
+    d.dvd_starring,
+    l.loan_date
+FROM borrowers AS b
+JOIN loans AS l
+    ON b.borrower_no = l.borrower_no
+JOIN loan_dvds AS ld
+    ON l.loan_no = ld.loan_no
+JOIN dvds AS d
+    ON ld.dvd_no = d.dvd_no
+WHERE d.rental_category = 'Comedy'
+  AND l.loan_date >= DATE_SUB(CURDATE(), INTERVAL 4 WEEK)
+ORDER BY b.borrower_name;
+
+
+
+
+
+
+
+
+
+
+
 
 
 
