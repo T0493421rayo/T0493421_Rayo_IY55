@@ -53,6 +53,7 @@ CREATE TABLE loan_dvds(
 
 
 /*borrower*/
+/*ChatGpt(2026)*/
 INSERT INTO borrowers(borrower_no, borrower_name, borrower_address, borrower_status,total_fine_cost)
 VALUES ('BN1721','Ben Jones','28 Loan Road,Nottingham NG3 3PB','ALLOWED',0.00),
     ('BN2001','Alex Morgan','12 Elm Street,NG1 4AB','ALLOWED',0.00),
@@ -94,6 +95,7 @@ VALUES ('BN1721','Ben Jones','28 Loan Road,Nottingham NG3 3PB','ALLOWED',0.00),
 
 
 /*dvds*/
+/*ChatGpt(2026)*/
 INSERT INTO dvds (dvd_no, dvd_title, dvd_starring, dvd_year, rental_category, rental_cost,rental_duration,fine_charged_per_day)
 VALUES
     ('DN198','Raiders Of The Lost Ark','Harrison Ford',1981,'adventure',3.50,7,1.00),
@@ -134,9 +136,12 @@ VALUES
     ('DN0190','Resident Evil: The Final Chapter','Millia Jovovich',2016,'Action',4.50,3,1.50),
     ('DN0107','Captain America','Chris Evans',2016,'Superhero',4.50,3,2.00);
 
-
+INSERT INTO dvds (dvd_no, dvd_title, dvd_starring, dvd_year, rental_category, rental_cost,rental_duration,fine_charged_per_day)
+VALUES('DN419','Ready Or Not','Tim Mark',2010,'Drama',4.20,7,1.20),
+      ('DN888','Blood and Water','Ryan Reynolds',2016,'Drama',4.20,7,1.20);
 
 /*loans*/
+/*ChatGpt(2026)*/
 INSERT INTO loans (loan_no, borrower_no, loan_date)
 VALUES
     ('LN74857', 'BN1721', STR_TO_DATE('06/02/2002','%d/%m/%Y')),
@@ -188,6 +193,7 @@ VALUES
 
 
 /*loan dvds*/
+/*ChatGpt(2026)*/
 INSERT INTO loan_dvds
 (loan_no, dvd_no, copy_no, dvd_status, actual_return_date, return_due_date, shelf_position)
 VALUES
@@ -331,11 +337,19 @@ FROM borrowers
 ORDER BY total_fine_cost DESC
 LIMIT 1;
 
-/* command for cost rental updat es*/
+/* command for cost rental updates*/
 UPDATE dvds
 SET rental_cost = 5.50
 WHERE rental_category = 'Superhero'
   AND dvd_year >= 2015;
+
+/* removes dvd without loans*/
+DELETE FROM dvds
+WHERE dvd_no NOT IN (
+    SELECT dvd_no
+    FROM loan_dvds
+);
+
 
 
 
